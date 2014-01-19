@@ -1,11 +1,11 @@
 {
   "author": "agun <pdc222@nate.com>",
   "name": "BIGMAMA-AGUN node.js code",
-  "description": "BIGMAMA-AGUN project that node.js code by agun"
+  "description": "BIGMAMA-AGUN project that node.js code by agun",
   "version": "0.0.0",
-  "script":{
+  "scripts":{
     "test": "expresso test/*"
-  }
+  },
   "engines": {
     "node": ">= 0.10"
   },
