@@ -1,7 +1,9 @@
 /**
 *  This module was implemented redis queue.
 *  author agun
-*  see node_redis (https://github.com/mranney/node_redis)
+*  License MIT
+*  use node_redis (https://github.com/mranney/node_redis)
+*  see https://github.com/agune/BIGMAMA-AGUN
 *  see BIGMAMA PROJECT (https://github.com/PROJECT-BIGMAMA/BIGMAMA-DOC)
 */
 

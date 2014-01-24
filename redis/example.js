@@ -1,7 +1,8 @@
 /**
 *  This is RedisQ example
 *  author agun
-*  
+*  License MIT
+*  see https://github.com/agune/BIGMAMA-AGUN
 *  see BIGMAMA PROJECT INFO (https://github.com/PROJECT-BIGMAMA/BIGMAMA-DOC)
 **/
 
