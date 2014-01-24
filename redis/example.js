@@ -1,27 +1,26 @@
 /**
-*  This example code is node_redis study code.
+*  This is RedisQ example
 *  author agun
-*  see node_redis (https://github.com/mranney/node_redis)
-*  see BIGMAMA PROJECT (https://github.com/PROJECT-BIGMAMA/BIGMAMA-DOC)
-*/
+*  
+*  see BIGMAMA PROJECT INFO (https://github.com/PROJECT-BIGMAMA/BIGMAMA-DOC)
+**/
 
-var redis = require("redis");
-var client = redis.createClient();
+// include RedisQ module
+var redisq = require("./RedisQ");
 
-client.on("error", function(err){
-	console.log("Error" + err);
-})
+// created RedisQ instance
+redisq = new RedisQ();
 
+// push queue
+redisq.push("module_test", "module_value");
 
-client.set("string key", "string val", redis.print);
-client.hset("hash key", "hashtest 1", "some value", redis.print);
-client.hset(["hash key", "hashtest 2", "some other value"], redis.print);
-client.hkeys("hash key", function (err, replies) {
-	console.log(replies.length + " replies:");
-	replies.forEach(function (reply, i) {
-		console.log("    " + i + ": " + reply);
-	});
-	client.quit();
- });
- 
- console.log("last line");
+// This is function when obtain data by pop.
+var getQueueValue = function (err, value){
+	console.log(value);	
+}
+
+// pop queue
+redisq.pop("module_test", getQueueValue);
+
+// check asynchronous
+console.log("end line");

@@ -6,13 +6,17 @@
   "scripts":{
     "test": "expresso test/*"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agune/BIGMAMA-AGUN.git"
+  },
   "engines": {
     "node": ">= 0.10"
   },
   "dependencies": {},
   "devDependencies": {
     "expresso": "0.9.x",
-    "redis": "0.10.x",
-    "hiredis": "0.1.x"
+    "redis": "0.10.x"
+    //"hiredis": "0.1.x"
   }
 }
