@@ -9,26 +9,102 @@
 
 var redis = require("redis");
 
+
+/**
+* Function is sending pub message. 
+**/
+var pubCommand =  function(client, key, value){
+	client.rpush(key, value, function(err, replay){
+		client.publish(key, "push queue : " + replay);
+	})
+};
+
+
 // made redis queue function
-RedisQ = function(port, ip, pubUse){
+RedisQ = function(port, ip){
 
 	// connect redis and get client 
 	this.client =  redis.createClient(port, ip);
-	this.pubUse =  pubUse;
+	
+	// subscribe client 
+	this.subClient = null;
+	this.port = port;      	// default 6379
+	this.ip =  ip;			// default 127.0.0.1
+	this.subscribe = false;
+	this.subscribeCmd = null;
 };
 
 
+// push value in queue by publish / subscribe model
+RedisQ.prototype.pubPush = function (key, value){
 
+	var client  = this.client;
+
+	if(this.subscribe){
+		pubCommand(client, key, value);
+	}else{
+		setTimeout(pubCommand, 1000, client, key, value);
+	}
+
+};
+
+// push value in queue
 RedisQ.prototype.push = function (key, value){
-	this.client.lpush(key, value, redis.print);
+	this.client.rpush(key, value);
 };
 
+// pop value in queue by publish / subscribe model
+RedisQ.prototype.waitPop = function (key, callback){
+		
+		// connect subscribe client 
+		if(this.subClient == null){
+			this.subClient = redis.createClient(this.port, this.ip);
+		}	
+		
+		var client = this.client;
 
+		var self = this;
+    	
+    	// Client will emit subscribe in response to a SUBSCRIBE command
+    	this.subClient.on("subscribe", function (channel, count) {
+    		self.subscribe = true;
+    		
+    		if(self.subscribeCmd != null)
+    			self.subscribeCmd();
+    	});
+   
+   		// Client will emit message for every message received
+		this.subClient.on("message", function (channel, message) {
+    		client.lpop(key, callback);
+    	});
+
+		// try subscribe
+	 	this.subClient.subscribe(key);
+
+};
+
+// pop value in queue
 RedisQ.prototype.pop = function (key, callback){
-	this.client.rpop(key, callback);
+	this.client.lpop(key, callback);
 };
+
+// check subscrible ok?
+RedisQ.prototype.isSubscribe = function (){
+	return this.subscribe;
+};
+
+// it is extending safely subscribe function 
+RedisQ.prototype.extendSubscribe= function(subscribeCmd){
+	this.subscribeCmd = subscribeCmd;
+};
+
+// clear client resource
+RedisQ.prototype.quit = function (){
+	this.client.quit();
+	if(this.subClient != null) this.subClient.quit();
+};
+
 
 // exposure
 exports = RedisQ;
-
 
