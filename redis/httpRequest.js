@@ -5,7 +5,7 @@
 **/
 
 var http = require('http');
-var Iconv = require('iconv').Iconv;
+var Iconv = require('iconv').Iconv;                 // you must done "npm install iconv"
 var iconv = new Iconv('EUC-KR', 'UTF-8//TRANSLIT//IGNORE');
 
 
