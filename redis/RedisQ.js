@@ -13,9 +13,12 @@ var redis = require("redis");
 /**
 * Function is sending pub message. 
 **/
-var pubCommand =  function(client, key, value){
+var pubCommand =  function(client, key, value, callback){
 	client.rpush(key, value, function(err, replay){
 		client.publish(key, "push queue : " + replay);
+		if(callback){
+			callback();
+		}
 	})
 };
 
@@ -36,14 +39,14 @@ RedisQ = function(port, ip){
 
 
 // push value in queue by publish / subscribe model
-RedisQ.prototype.pubPush = function (key, value){
+RedisQ.prototype.pubPush = function (key, value, callback){
 
 	var client  = this.client;
 
-	if(this.subscribe){
-		pubCommand(client, key, value);
+	if(this.subscribe || !this.subClient){
+		pubCommand(client, key, value, callback);
 	}else{
-		setTimeout(pubCommand, 1000, client, key, value);
+		setTimeout(pubCommand, 1000, client, key, value, callback);
 	}
 
 };
