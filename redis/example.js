@@ -13,6 +13,30 @@ var redisq = require("./RedisQ");
 redisq = new RedisQ();
 
 
+var hSetValue = function (err, value){
+	console.log("hSet queue : " + value);	
+}
+
+var hGetValue = function (err, value){
+	console.log("hGet queue : " + value);	
+}
+
+var hGetAllValue = function (err, value){
+	console.log("hGet all queue : ");
+	console.dir(value);	
+	console.log(value.fieldname1)
+}
+
+
+redisq.hset("hset_test", "fieldname1", "set value");
+
+redisq.hset("hset_test", "fieldname2", "set value2", hSetValue);
+
+redisq.hget("hset_test", "fieldname1", hGetValue);
+
+redisq.hgetall("hset_test", hGetAllValue);
+
+
 
 // push queue
 redisq.push("module_test", "module_value");

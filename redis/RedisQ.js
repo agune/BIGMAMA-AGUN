@@ -91,6 +91,25 @@ RedisQ.prototype.pop = function (key, callback){
 	this.client.lpop(key, callback);
 };
 
+
+// set hash 
+RedisQ.prototype.hset = function (key, fieldname,  value, callback){
+	if(callback != null)
+		this.client.hset(key, fieldname, value, callback);
+	else
+		this.client.hset(key, fieldname, function(){});		
+};
+
+// get hash
+RedisQ.prototype.hget = function (key, fieldname,  callback){
+	this.client.hget(key, fieldname, callback);		
+};
+
+// get all hash
+RedisQ.prototype.hgetall = function (key,  callback){
+	this.client.hgetall(key, callback);		
+};
+
 // check subscrible ok?
 RedisQ.prototype.isSubscribe = function (){
 	return this.subscribe;
