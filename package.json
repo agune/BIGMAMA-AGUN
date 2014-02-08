@@ -1,8 +1,9 @@
 {
   "author": "agun <pdc222@nate.com>",
-  "name": "BIGMAMA-AGUN",
+  "name": "RedisQ",
   "description": "BIGMAMA-AGUN project that node.js code by agun",
   "version": "0.0.0",
+  "main": "RedisQ.js",
   "scripts":{
     "test": "expresso test/*"
   },
@@ -14,8 +15,7 @@
   "engines": {
     "node": ">= 0.10"
   },
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "expresso": "0.9.x",
     "redis": "0.10.x"
   }

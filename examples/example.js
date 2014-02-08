@@ -7,7 +7,7 @@
 **/
 
 // include RedisQ module
-var redisq = require("./RedisQ");
+var RedisQ = require("../RedisQ");
 
 // created RedisQ instance
 redisq = new RedisQ();
