@@ -97,7 +97,7 @@ RedisQ.prototype.hset = function (key, fieldname,  value, callback){
 	if(callback != null)
 		this.client.hset(key, fieldname, value, callback);
 	else
-		this.client.hset(key, fieldname, function(){});		
+		this.client.hset(key, fieldname, value, function(err, value){});		
 };
 
 // get hash
